@@ -1,3 +1,4 @@
+import { MaintenanceApiService } from './../services/maintenance-api.service';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ALL_SERVICE_TYPES, MaintenanceRequest } from '@suiteportal/api-interfaces';
@@ -22,7 +23,7 @@ export class HomeComponent implements OnInit {
     }
   );
 
-  constructor() {
+  constructor(private maintenanceService: MaintenanceApiService) {
     //
   }
 
@@ -33,6 +34,8 @@ export class HomeComponent implements OnInit {
   onSubmit() {  
     if (this.maintenanceForm.valid ) {
       // create maintenance
+      const newMaintenance = this.maintenanceForm.value;
+      this.maintenanceService.createMaintenance(newMaintenance)
     }  
   }
 }

@@ -1,0 +1,15 @@
+<mat-list>
+  <mat-list-item *ngFor="let maintenance of maintenances">
+    <mat-card>
+      <pm-maintenance [maintenance]="maintenance"></pm-maintenance>
+      <div class="maintenance-buttons">
+        <button mat-raised-button color="accent">
+          Cancel
+        </button>
+        <button class="delete-maintenance-button" mat-icon-button (click)="onCancel(maintenance)">
+            <mat-icon>delete</mat-icon>
+        </button>
+      </div>
+    </mat-card>
+  </mat-list-item>
+</mat-list>

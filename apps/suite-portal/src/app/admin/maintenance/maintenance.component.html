@@ -1,0 +1,58 @@
+    <mat-card>
+      <mat-card-content>
+        <form class="maint-form">
+          <mat-form-field>
+            <mat-label>Apartment Unit #</mat-label>
+            <input
+              matInput
+              readonly
+              [value]="maintenance.unitNumber"
+              type="text" />
+          </mat-form-field>
+
+          <mat-form-field>
+            <mat-label>Requester Name</mat-label>
+            <input 
+              matInput
+              readonly
+              [value]="maintenance.name"
+              type="text" />
+          </mat-form-field>
+
+          <mat-form-field>
+            <mat-label>Requester Email</mat-label>
+            <input
+              matInput
+              readonly
+              [value]="maintenance.email"
+              type="email" />
+          </mat-form-field>
+
+          <mat-form-field>
+            <mat-label>Service Type</mat-label>
+              <input
+              matInput
+              readonly
+              [value]="maintenance.serviceType"
+              type="text" />
+          </mat-form-field>
+
+          <mat-form-field>
+            <mat-label>Summary</mat-label>
+            <input
+              matInput
+              [value]="maintenance.summary"
+              type="text" />
+          </mat-form-field>
+
+          <mat-form-field>
+            <mat-label>Details</mat-label>
+            <textarea
+              matInput
+              readonly
+              [value]="maintenance.details"
+              ></textarea>
+          </mat-form-field>
+        </form>
+      </mat-card-content>
+    </mat-card>
