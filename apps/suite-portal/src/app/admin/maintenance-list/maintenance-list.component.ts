@@ -1,6 +1,10 @@
+import { AuthService } from './../../services/auth.service';
 import { Component, Input, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { ALL_SERVICE_TYPES, MaintenanceRequest } from '@suiteportal/api-interfaces';
+import { MaintenanceRequest } from '@suiteportal/api-interfaces';
+import { MaintenanceApiService } from '../../services';
+import { Observable } from 'rxjs';
+import { Maintenance } from '../../interfaces/ui-interface';
 
 @Component({
   selector: 'pm-maintenance-list',
@@ -9,18 +13,25 @@ import { ALL_SERVICE_TYPES, MaintenanceRequest } from '@suiteportal/api-interfac
 })
 export class MaintenanceListComponent implements OnInit {
 
-  @Input() maintenances: MaintenanceRequest[];
+  @Input() maintenances: Maintenance[];
+  maintenances$: Observable<Maintenance[]>;
+  isMaintenanceCanceled = true;   ///  temporary for check
 
-  constructor() {
+  constructor(
+    private authService: AuthService,
+    public maintenanceService: MaintenanceApiService
+  ) {
     //
   }
 
   ngOnInit(): void {
-    //  
+    this.maintenances$ = this.maintenanceService.getAllMaintenances();
   }
 
-  onCancel(maintenance: MaintenanceRequest) {
-    console.log('maintenances CANCELED: ', maintenance);
+  onCancel(maintenance: Maintenance) {
+    if(this.authService.isAuthenticatedUser()) {
+      console.log('maintenances CANCELED: ', maintenance);
+    }
     
   }
 }

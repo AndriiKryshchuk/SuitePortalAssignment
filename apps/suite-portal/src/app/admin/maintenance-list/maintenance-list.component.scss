@@ -3,7 +3,9 @@
   justify-content: center;
   display: flex;
 }
-
+.maintenance-canceled {
+  background-color: red;
+}
 .maintenance-buttons {
   display: flex;
   place-content: space-between;

@@ -1,6 +1,6 @@
 <mat-list>
-  <mat-list-item *ngFor="let maintenance of maintenances">
-    <mat-card>
+  <mat-list-item *ngFor="let maintenance of ( maintenances$ | async)">
+    <mat-card [class.maintenance-canceled]="isMaintenanceCanceled">
       <pm-maintenance [maintenance]="maintenance"></pm-maintenance>
       <div class="maintenance-buttons">
         <button mat-raised-button color="accent">

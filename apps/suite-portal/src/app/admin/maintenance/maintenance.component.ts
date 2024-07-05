@@ -1,6 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { ALL_SERVICE_TYPES, MaintenanceRequest } from '@suiteportal/api-interfaces';
+import { Component, Input, OnInit } from '@angular/core';
 
 @Component({
   selector: 'pm-maintenance',

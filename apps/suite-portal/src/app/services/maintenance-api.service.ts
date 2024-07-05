@@ -53,16 +53,25 @@ export class MaintenanceApiService {
     }
   ] as MaintenanceRequest[];
 
-  rootURL = '/admin';
+  apiURL = {
+    baseUrl: '/api',
+    maintenance: 'maintenance-requests',
+    closeMaintenance: (id) => `maintenance-requests/${id}/close` 
+  };
 
   getAllMaintenances() {
     return of(this.mockMaintenances);
-    // this.http.get(this.rootURL);
+    this.http.get(`${this.apiURL.baseUrl}/${this.apiURL.maintenance}`);
   }
 
   createMaintenance(maintenance: MaintenanceRequest) {
     console.log('maintenance CREATED: ', {maintenance});
+    this.http.post(`${this.apiURL.baseUrl}/${this.apiURL.maintenance}`, maintenance)
+  }
+
+  closeMaintenance(maintenance: MaintenanceRequest) {
+    console.log('maintenance CREATED: ', {maintenance});
     
-      // this.http.post(this.rootURL, maintenance);
+    this.http.put(`${this.apiURL.baseUrl}/${this.apiURL.closeMaintenance(maintenance.email)}`, maintenance);
   }
 } 
