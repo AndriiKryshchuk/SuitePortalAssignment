@@ -35,27 +35,23 @@ export class MaintenanceListComponent implements OnInit {
 
   onCancel(id: string) {
     if(this.authService.isAuthenticatedUser()) {
-      // console.log('maintenances CANCELED: ', maintenance);
+      this.maintenanceService.closeMaintenance(id).subscribe(
+        (res) => {
+          this.updateData.next(null);
+        }
+      )
     }
-    this.maintenanceService.closeMaintenance(id).subscribe(
-      (res) => {
-        console.log('CANCELED', res);
-        this.updateData.next(null);
-      }
-    )
 
     
   }
   onDelete(id: string) {
     if(this.authService.isAuthenticatedUser()) {
-      // console.log('maintenances CANCELED: ', maintenance);
+      this.maintenanceService.deleteMaintenance(id).subscribe(
+        (res) => {
+          this.updateData.next(null);
+        }
+      )
     }
-    this.maintenanceService.deleteMaintenance(id).subscribe(
-      (res) => {
-        console.log('DELETE', res);
-        this.updateData.next(null);
-      }
-    )
 
     
   }

@@ -1,14 +1,9 @@
 {
   "admins": [
     {
-      "id": "YBxq_XP7qA",
-      "email": "admin@TextDecoderStream.test",
-      "hash": "$2b$10$vPwRDpVYAQpg2/00KTFB.OCtWzDTFyj0ARQoG20kN18FRcrg0v7T6"
-    },
-    {
-      "id": "ZCPom8mXbu",
-      "email": "admin@TextDecoderStream.test",
-      "hash": "$2b$10$3qLzwE.fePRIUFLJeQUtC.LvuD45W23XrQ.T5F/OFJtIv0Diz1vlO"
+      "id": "CxPHloPCDN",
+      "email": "admin@test.test",
+      "hash": "$2b$10$53LgAbHT2PefjmnlYf.5Te/DdDtN5LuYPl5PwX9zqUhGlTMwaObse"
     }
   ]
 }

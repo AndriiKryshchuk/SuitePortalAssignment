@@ -1,7 +1,6 @@
-import { HttpClient, HttpHeaders } from "@angular/common/http";
+import { HttpClient } from "@angular/common/http";
 import { EventEmitter, Injectable } from "@angular/core";
 import { Observable } from "rxjs";
-import { tap } from "rxjs/operators";
 
 
 @Injectable({
@@ -13,25 +12,7 @@ export class AuthService {
     constructor(private httpClient: HttpClient) { }
 
     login(credentials: {email: string; password: string}): Observable<any> {
-        let body = new URLSearchParams();
-            body.set('email', credentials.email);
-            body.set('password', credentials.password);
-            console.log('before post: ', {body, credentials});
-        const headers = new HttpHeaders({
-            'Content-Type': 'application/x-www-form-urlencoded'
-        })
-            
-        return this.httpClient.post(`${this.baseUrl}/auth/signin`, body, {headers}).pipe(
-            tap((response: any) => {
-                // setTimeout(() => {
-                //     const token = response?.access_token;
-                //     if (!!token) {                        
-                //         localStorage.setItem(this.TOKEN_KEY, token);
-                //         this.emitLoggedInEvent();
-                //     }
-                // })
-            })
-        );
+        return this.httpClient.post(`${this.baseUrl}/auth/signin`, credentials);
     }
 
     // for future actions support based on login behavior 
@@ -42,8 +23,6 @@ export class AuthService {
 
     getToken(): string | null {
         if (typeof window !== "undefined") {
-            console.log('TOKEN: ', !!null, !!localStorage.getItem(this.TOKEN_KEY));
-            
             return localStorage.getItem(this.TOKEN_KEY);
         }
         return null;

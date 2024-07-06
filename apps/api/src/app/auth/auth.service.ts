@@ -17,7 +17,7 @@ export class AuthService {
   ) {}
 
   async signup(dto: AuthDto) {
-    const user = {password: '123456', email: 'admin@TextDecoderStream.test'}
+    const user = {password: '123456', email: 'admin@test.test'}
     
     const hash = await bcrypt.hash(user.password, 10);
 
@@ -36,10 +36,8 @@ export class AuthService {
   }
 
   async signin(dto: AuthDto) {
-    console.log('SIGNIN SERV', dto);
     
     const user = await this.authDao.getAdminUserByEmail(dto.email);
-
     if (!user)
       throw new ForbiddenException(
         'Credentials incorrect',
