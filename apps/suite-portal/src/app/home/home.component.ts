@@ -1,7 +1,8 @@
-import { MaintenanceApiService } from './../services/maintenance-api.service';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { ALL_SERVICE_TYPES, MaintenanceRequest } from '@suiteportal/api-interfaces';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { ALL_SERVICE_TYPES } from '@suiteportal/api-interfaces';
+import { MaintenanceApiService } from './../services/maintenance-api.service';
 
 @Component({
   selector: 'pm-home',
@@ -23,7 +24,9 @@ export class HomeComponent implements OnInit {
     }
   );
 
-  constructor(private maintenanceService: MaintenanceApiService) {
+  constructor(
+    private maintenanceService: MaintenanceApiService,
+    private snackBar: MatSnackBar) {
     //
   }
 
@@ -33,9 +36,25 @@ export class HomeComponent implements OnInit {
 
   onSubmit() {  
     if (this.maintenanceForm.valid ) {
-      // create maintenance
       const newMaintenance = this.maintenanceForm.value;
-      this.maintenanceService.createMaintenance(newMaintenance)
+      this.maintenanceService.createMaintenance(newMaintenance).subscribe(
+        res => {
+          this.openSnackBar('Maintenance requests successfully created', 'Close');
+          this.maintenanceForm.reset();
+          this.maintenanceForm.markAsPristine(); 
+          this.maintenanceForm.markAsUntouched(); 
+          this.maintenanceForm.updateValueAndValidity();
+        },
+        err => {
+          this.openSnackBar('Maintenance requests was not created', 'Close');
+        }
+      );
     }  
+  }
+
+  openSnackBar(message: string, action: string) {
+    this.snackBar.open(message, action, {
+      duration: 5000,
+    });
   }
 }

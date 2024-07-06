@@ -1,4 +1,4 @@
-import { HttpClient } from "@angular/common/http";
+import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { EventEmitter, Injectable } from "@angular/core";
 import { Observable } from "rxjs";
 import { tap } from "rxjs/operators";
@@ -13,12 +13,23 @@ export class AuthService {
     constructor(private httpClient: HttpClient) { }
 
     login(credentials: {email: string; password: string}): Observable<any> {
-        return this.httpClient.post(`${this.baseUrl}/login`, credentials).pipe(
+        let body = new URLSearchParams();
+            body.set('email', credentials.email);
+            body.set('password', credentials.password);
+            console.log('before post: ', {body, credentials});
+        const headers = new HttpHeaders({
+            'Content-Type': 'application/x-www-form-urlencoded'
+        })
+            
+        return this.httpClient.post(`${this.baseUrl}/auth/signin`, body, {headers}).pipe(
             tap((response: any) => {
-                if (response && response.token) {
-                    localStorage.setItem(this.TOKEN_KEY, response.token);
-                    this.emitLoggedInEvent();
-                }
+                // setTimeout(() => {
+                //     const token = response?.access_token;
+                //     if (!!token) {                        
+                //         localStorage.setItem(this.TOKEN_KEY, token);
+                //         this.emitLoggedInEvent();
+                //     }
+                // })
             })
         );
     }
@@ -31,6 +42,8 @@ export class AuthService {
 
     getToken(): string | null {
         if (typeof window !== "undefined") {
+            console.log('TOKEN: ', !!null, !!localStorage.getItem(this.TOKEN_KEY));
+            
             return localStorage.getItem(this.TOKEN_KEY);
         }
         return null;
@@ -38,5 +51,10 @@ export class AuthService {
 
     isAuthenticatedUser(): boolean {
         return !!this.getToken();
+    }
+
+    logout() {
+        localStorage.removeItem(this.TOKEN_KEY);
+        this.emitLoggedInEvent();
     }
 }

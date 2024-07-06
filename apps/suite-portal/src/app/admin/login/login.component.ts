@@ -29,14 +29,18 @@ export class LoginComponent {
     login(): void {
       if (this.userForm.valid) {
         const credentials = this.userForm.value;
+        console.log('credentials', credentials);
+        
         this.authService.login(credentials).subscribe(
             (response: any) => {
-                const token = response.token;
+                const token = response.access_token;
                 localStorage.setItem("token", token);
                 this.authService.emitLoggedInEvent();
                 this.userForm.reset();
                 this.successMessage = response.message;
-                this.router.navigate(['/admin/maintenances'])
+                setTimeout(() => {
+                  this.router.navigate(['/admin/maintenances']);
+                },500);
             },
             (error: any) => {
                 console.error("Error logging in:", error);

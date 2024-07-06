@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { MaintenanceRequest, ServiceType } from '@suiteportal/api-interfaces';
-import { of } from 'rxjs';
+import { Observable, of } from 'rxjs';
+import { Maintenance } from '../interfaces/ui-interface';
 
 @Injectable({
   providedIn: 'root'
@@ -56,22 +57,24 @@ export class MaintenanceApiService {
   apiURL = {
     baseUrl: '/api',
     maintenance: 'maintenance-requests',
-    closeMaintenance: (id) => `maintenance-requests/${id}/close` 
+    closeMaintenance: (id) => `maintenance-requests/${id}/close`,
+    deleteMaintenance: (id) => `maintenance-requests/${id}/delete` 
   };
 
   getAllMaintenances() {
-    return of(this.mockMaintenances);
-    this.http.get(`${this.apiURL.baseUrl}/${this.apiURL.maintenance}`);
+    // return of(this.mockMaintenances);
+    return this.http.get(`${this.apiURL.baseUrl}/${this.apiURL.maintenance}`) as Observable<Maintenance[]>;
   }
 
   createMaintenance(maintenance: MaintenanceRequest) {
-    console.log('maintenance CREATED: ', {maintenance});
-    this.http.post(`${this.apiURL.baseUrl}/${this.apiURL.maintenance}`, maintenance)
+    return this.http.post(`${this.apiURL.baseUrl}/${this.apiURL.maintenance}`, maintenance);
   }
 
-  closeMaintenance(maintenance: MaintenanceRequest) {
-    console.log('maintenance CREATED: ', {maintenance});
-    
-    this.http.put(`${this.apiURL.baseUrl}/${this.apiURL.closeMaintenance(maintenance.email)}`, maintenance);
+  closeMaintenance(id: string) {    
+    return this.http.put(`${this.apiURL.baseUrl}/${this.apiURL.closeMaintenance(id)}`, {});
+  }
+
+  deleteMaintenance(id: string) {    
+    return this.http.delete(`${this.apiURL.baseUrl}/${this.apiURL.deleteMaintenance(id)}`);
   }
 } 

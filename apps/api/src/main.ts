@@ -14,6 +14,7 @@ async function bootstrap() {
   if (!environment.production) {
     app.enableCors();
   }
+
   const globalPrefix = 'api';
   app.setGlobalPrefix(globalPrefix);
   const port = process.env.PORT || 3333;
