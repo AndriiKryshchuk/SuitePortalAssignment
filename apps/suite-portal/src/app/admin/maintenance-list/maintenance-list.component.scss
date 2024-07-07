@@ -1,0 +1,22 @@
+.mat-list-base .mat-list-item, .mat-list-base .mat-list-option {
+  height: 515px;
+  justify-content: center;
+  display: flex;
+}
+.maintenance-canceled {
+  background: rgba(155, 0, 0, 0.1);
+}
+.maintenance-buttons {
+  display: flex;
+  place-content: space-between;
+  margin-top: 15px;
+}
+
+.logout {
+
+}
+
+.actions {
+  display: flex;
+  justify-content: right;
+}

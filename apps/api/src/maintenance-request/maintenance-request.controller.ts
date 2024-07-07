@@ -1,6 +1,7 @@
-import { BadRequestException, Body, Controller, Post, Get, Param } from '@nestjs/common';
+import { BadRequestException, Body, Controller, Post, Get, Param, Put, Delete, UseGuards } from '@nestjs/common';
 import { MaintenanceRequest } from '@suiteportal/api-interfaces';
 import { MaintenanceRequestService } from './maintenance-request.service';
+import { JwtGuard } from '../app/auth/guard';
 
 @Controller('maintenance-requests')
 export class MaintenanceRequestController {
@@ -24,6 +25,12 @@ export class MaintenanceRequestController {
     return await this.maintenanceRequestService.createMaintenanceRequest(maintenanceRequest);
   }
 
+  @UseGuards(JwtGuard)
+  @Get('/')
+  public async getAllMaintenanceRequest() {
+    return await this.maintenanceRequestService.getAllMaintenanceRequest();
+  }
+
   @Get('/:id')
   public async getMaintenanceRequest(
     @Param('id') id: string,
@@ -32,6 +39,28 @@ export class MaintenanceRequestController {
       throw new BadRequestException('No id provided');
     }
     return await this.maintenanceRequestService.getMaintenanceRequest(id);
+  }
+
+  @UseGuards(JwtGuard)
+  @Put('/:id/close')
+  public async closeMaintenanceRequest(
+    @Param('id') id: string,
+  ) {
+    if (!id) {
+      throw new BadRequestException('No id provided');
+    }
+    return await this.maintenanceRequestService.closeMaintenanceRequest(id);
+  }
+
+  @UseGuards(JwtGuard)
+  @Delete('/:id/delete')
+  public async deleteMaintenanceRequest(
+    @Param('id') id: string,
+  ) {
+    if (!id) {
+      throw new BadRequestException('No id provided');
+    }
+    return await this.maintenanceRequestService.deleteMaintenanceRequest(id);
   }
 
 }

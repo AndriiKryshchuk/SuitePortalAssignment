@@ -1,0 +1,18 @@
+<div class="actions">
+  <button mat-raised-button color="warn" class="logout"  (click)="logout()">Logout</button>
+</div>
+<mat-list>
+  <mat-list-item *ngFor="let maintenance of ( dataSource$ | async)">
+    <mat-card [class.maintenance-canceled]="maintenance?.closedAt">
+      <pm-maintenance [maintenance]="maintenance"></pm-maintenance>
+      <div class="maintenance-buttons">
+        <button mat-raised-button color="accent" (click)="onCancel(maintenance.id)" [disabled]="!!maintenance?.closedAt">
+          Cancel
+        </button>
+        <button class="delete-maintenance-button" mat-icon-button (click)="onDelete(maintenance.id)">
+            <mat-icon>delete</mat-icon>
+        </button>
+      </div>
+    </mat-card>
+  </mat-list-item>
+</mat-list>

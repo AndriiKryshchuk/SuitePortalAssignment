@@ -7,6 +7,7 @@ import * as nanoid from 'nanoid';
 export interface MaintenanceRequestDB extends MaintenanceRequest {
   id: string;
   submittedAt: Date;
+  closedAt: Date;
 }
 
 export interface MaintenanceRequestData {
@@ -35,13 +36,30 @@ export class MaintenanceRequestDao {
       .push({
         ...id,
         ...maintenanceRequest,
+        closedAt: '',
         submittedAt: new Date(),
       })
       .write()
     return id;
   }
 
+  async getAllMaintenanceRequest(): Promise<MaintenanceRequestDB> {
+    return await this.collection.value();
+  }
+
   async getMaintenanceRequest(id: string): Promise<MaintenanceRequestDB> {
     return await this.collection.find({ id }).value();
   }
+
+  async closeMaintenanceRequest(id: string): Promise<MaintenanceRequestDB> {
+    return await this.collection.chain().find({ id: id}).assign({closedAt: new Date()}).write();
+  }
+
+  async deleteMaintenanceRequest(id: string): Promise<MaintenanceRequestDB> {
+    return await this.collection
+          .remove(({id}))
+          .write();
+  }
+
+
 }

@@ -1,19 +1,12 @@
-<mat-grid-list cols="1" rowHeight="3:1">
-  <mat-grid-tile>
     <mat-card>
-      <mat-card-header>
-        <mat-card-title>
-          Maintenance Request Form
-        </mat-card-title>
-      </mat-card-header>
-
       <mat-card-content>
-        <form class="maint-form" [formGroup]="maintenanceForm">
+        <form class="maint-form">
           <mat-form-field>
             <mat-label>Apartment Unit #</mat-label>
             <input
               matInput
-              formControlName="unitNumber"
+              readonly
+              [value]="maintenance.unitNumber"
               type="text" />
           </mat-form-field>
 
@@ -21,7 +14,8 @@
             <mat-label>Requester Name</mat-label>
             <input 
               matInput
-              formControlName="name"
+              readonly
+              [value]="maintenance.name"
               type="text" />
           </mat-form-field>
 
@@ -29,24 +23,25 @@
             <mat-label>Requester Email</mat-label>
             <input
               matInput
-              formControlName="email"
+              readonly
+              [value]="maintenance.email"
               type="email" />
           </mat-form-field>
 
           <mat-form-field>
             <mat-label>Service Type</mat-label>
-            <mat-select formControlName="serviceType">
-              <mat-option *ngFor="let serviceType of serviceTypes" [value]="serviceType">
-                {{serviceType}}
-              </mat-option>
-            </mat-select>
+              <input
+              matInput
+              readonly
+              [value]="maintenance.serviceType"
+              type="text" />
           </mat-form-field>
 
           <mat-form-field>
             <mat-label>Summary</mat-label>
             <input
               matInput
-              formControlName="summary"
+              [value]="maintenance.summary"
               type="text" />
           </mat-form-field>
 
@@ -54,15 +49,10 @@
             <mat-label>Details</mat-label>
             <textarea
               matInput
-              formControlName="details"
+              readonly
+              [value]="maintenance.details"
               ></textarea>
           </mat-form-field>
-
-          <button mat-raised-button color="accent" (click)="onSubmit()">
-            Submit
-          </button>
         </form>
       </mat-card-content>
     </mat-card>
-  </mat-grid-tile>
-</mat-grid-list>
