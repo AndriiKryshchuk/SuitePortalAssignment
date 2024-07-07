@@ -1,9 +1,9 @@
 {
   "admins": [
     {
-      "id": "CxPHloPCDN",
+      "id": "DETxLOjzpP",
       "email": "admin@test.test",
-      "hash": "$2b$10$53LgAbHT2PefjmnlYf.5Te/DdDtN5LuYPl5PwX9zqUhGlTMwaObse"
+      "password": "123456"
     }
   ]
 }

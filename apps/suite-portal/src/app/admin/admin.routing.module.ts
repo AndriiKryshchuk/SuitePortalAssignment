@@ -3,14 +3,23 @@ import { RouterModule, Routes } from '@angular/router';
 import { AdminComponent } from './admin.component';
 import { MaintenanceListComponent } from './maintenance-list/maintenance-list.component';
 import { AuthGuardService } from '../services/guards';
+import { LoginComponent } from './login/login.component';
 
 const routes: Routes = [
-  { path:"", component: AdminComponent } ,
+  { 
+    path:"",
+    redirectTo: 'maintenances'
+  },
   { 
     path:"maintenances",
     component: MaintenanceListComponent,
     canActivate: [AuthGuardService]
-  } ,
+  },
+  { 
+    path:"login",
+    component: LoginComponent
+  },
+  
 ];
 
 @NgModule({

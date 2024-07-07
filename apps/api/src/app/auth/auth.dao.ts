@@ -5,7 +5,7 @@ import * as nanoid from 'nanoid';
 
 export interface AdminUser {
   email: string;
-  hash: string;
+  password: string;
 }
 
 export interface AdminUserDB extends AdminUser {

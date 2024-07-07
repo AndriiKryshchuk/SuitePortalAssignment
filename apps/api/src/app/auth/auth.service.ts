@@ -3,7 +3,6 @@ import {
   Injectable,
 } from '@nestjs/common';
 import { AuthDto } from './dto';
-import * as bcrypt from 'bcrypt';
 import { JwtService } from '@nestjs/jwt';
 import { AuthDao } from './auth.dao';
 
@@ -19,12 +18,12 @@ export class AuthService {
   async signup(dto: AuthDto) {
     const user = {password: '123456', email: 'admin@test.test'}
     
-    const hash = await bcrypt.hash(user.password, 10);
+    const password = user.password;
 
     try {
       const userId = await this.authDao.createNewAdminUser({
         email: user.email,
-        hash,
+        password,
       });      
 
       return this.signToken(userId, dto.email);
@@ -38,18 +37,21 @@ export class AuthService {
   async signin(dto: AuthDto) {
     
     const user = await this.authDao.getAdminUserByEmail(dto.email);
+    console.log('signin: ', {dto, user});
+
+
     if (!user)
       throw new ForbiddenException(
-        'Credentials incorrect',
+        'Credentials incorrect USER',
       );
 
-    const pwMatches = await bcrypt.compare(dto.password, user.hash);
+    const pwMatches = dto.password === user.password;
 
     if (!pwMatches)
       throw new ForbiddenException(
-        'Credentials incorrect',
+        'Credentials incorrect PASSWORD',
       );
-    return this.signToken(user.id, user.email);
+    return await this.signToken(user.id, user.email);
   }
 
   async signToken(
